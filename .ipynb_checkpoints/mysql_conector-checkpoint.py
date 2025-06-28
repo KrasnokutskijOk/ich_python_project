@@ -13,7 +13,7 @@ def connection(config):
 def searching_film_by_name(db_conn, param):
     with db_conn.coursor() as coursor:
         cursor.execute(f'USE {settings.DATABASE_MYSQL_NAME}')
-        cursor.execute(COUNT_FilM)
+        cursor.execute(settings.COUNT_FilM)
         data = coursor.fetchall()
         count_total = data[0][0]
 

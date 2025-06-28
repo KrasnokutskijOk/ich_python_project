@@ -1,5 +1,7 @@
 import main
+import ui
 import datetime
+
 
 
 #Поиск фильмов My_SQL
@@ -26,9 +28,9 @@ COUNT_FilM = '''
 
     '''
 
-FILM_NAME_QUERY = f"SELECT f.title JOIN film_category as fc on f.film_id = fc.film_id join  FROM film as f WHERE LOWER(title) LIKE '% {main.get_action(name)}' or LOWER(title) LIKE '{main.get_action(name)} %' or LOWER(title) LIKE '% {main.get_action(name)} %'"
+FILM_NAME_QUERY = f"SELECT f.title JOIN film_category as fc on f.film_id = fc.film_id join  FROM film as f WHERE LOWER(title) LIKE '% {ui.film_name()}' or LOWER(title) LIKE '{ui.film_name()} %' or LOWER(title) LIKE '% {ui.film_name()} %'"
 
-FILM_GANRE_RELEASE_YEAR = f"SELECT f.title, c.name FROM film as f JOIN film_category as fc on f.film_id = fc.film_id JOIN category as c on fc.category_id = c.category_id WHERE c.name = {main.get_action(ganre)} AND f.release_year BETWEEN {main.get_action(release_year_min)} AND {main.get_action(release_year_max)}"
+FILM_GANRE_RELEASE_YEAR = f"SELECT f.title, c.name FROM film as f JOIN film_category as fc on f.film_id = fc.film_id JOIN category as c on fc.category_id = c.category_id WHERE c.name = {ui.film_ganre()} AND f.release_year BETWEEN {ui.film_release_year_min()} AND {ui.film_release_year_max()}"
 
 
 #Запись в монго

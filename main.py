@@ -31,15 +31,15 @@ def get_action(action, db_conn):
 
 
 def menu(db_conn):
-    while (ans := ui.main_menu()) != 0:
-        result = get_action(ans, db_conn)
+    while (action := ui.main_menu()) != 0:
+        result = get_action(action, db_conn)
         ui.print_table_data(result)
         
 
-def main():
+def main(db_conn):
     try:
         db_conn = mysql_conector.connection(settings.DATABASE_MYSQL_R)
-        menu(db_conn)
+        menu(result)
         db_conn.close()
     except pymysql.MySQLError as error:
         print(f"Connection or query error: ", error)
