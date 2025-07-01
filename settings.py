@@ -1,18 +1,20 @@
-import main
-import ui
+from dotenv import load_dotenv
+import os
+from pymongo import MongoClient
 import datetime
 
+load_dotenv() 
 
 
 #Поиск фильмов My_SQL
 
 DATABASE_MYSQL_R = {
 
-    'host': 'ich-db.edu.itcareerhub.de',
+    'host': os.getenv('MYSQL_HOST'),
 
-    'user': 'ich1',
+    'user': os.getenv('MYSQL_USER'),
 
-    'password': 'password',
+    'password': os.getenv('MYSQL_PASSWORD'),
 
     'charset': 'utf8mb4'
 
@@ -20,7 +22,7 @@ DATABASE_MYSQL_R = {
 
 DATABASE_MYSQL_NAME = 'sakila'
 
-COUNT_FilM = '''
+COUNT_FILM = '''
 
     SELECT COUNT(film_id)
 
@@ -28,33 +30,57 @@ COUNT_FilM = '''
 
     '''
 
-FILM_NAME_QUERY = f"SELECT f.title JOIN film_category as fc on f.film_id = fc.film_id join  FROM film as f WHERE LOWER(title) LIKE '% {ui.film_name()}' or LOWER(title) LIKE '{ui.film_name()} %' or LOWER(title) LIKE '% {ui.film_name()} %'"
+FILM_NAME_QUERY = """
+    SELECT f.title, f.release_year, c.name
+    FROM film AS f
+    JOIN film_category AS fc ON f.film_id = fc.film_id
+    JOIN category AS c ON fc.category_id = c.category_id
+    WHERE LOWER(f.title) LIKE %s
+    LIMIT %s OFFSET %s;
+"""
 
-FILM_GANRE_RELEASE_YEAR = f"SELECT f.title, c.name FROM film as f JOIN film_category as fc on f.film_id = fc.film_id JOIN category as c on fc.category_id = c.category_id WHERE c.name = {ui.film_ganre()} AND f.release_year BETWEEN {ui.film_release_year_min()} AND {ui.film_release_year_max()}"
+FILM_GENRE_YEAR_QUERY = """
+    SELECT f.title, f.release_year, c.name
+    FROM film AS f
+    JOIN film_category AS fc ON f.film_id = fc.film_id
+    JOIN category AS c ON fc.category_id = c.category_id
+    WHERE LOWER(c.name) = %s
+    AND f.release_year BETWEEN %s AND %s
+    LIMIT %s OFFSET %s;
+"""
 
+
+ALL_GENRES_QUERY = """
+    SELECT DISTINCT name FROM category ORDER BY name;
+"""
+
+YEAR_RANGE_QUERY = """
+    SELECT MIN(release_year), MAX(release_year) FROM film;
+"""
 
 #Запись в монго
 
-# CLIENT = MongoClient("mongodb://ich_editor:verystrongpassword"
-#  "@mongo.itcareerhub.de/?readPreference=primary"
-#  "&ssl=false&authMechanism=DEFAULT&authSource=ich_edit")
+MONGO_USER = os.getenv('MONGO_USER')
+MONGO_PASSWORD = os.getenv('MONGO_PASSWORD')
+MONGO_HOST = os.getenv('MONGO_HOST')
+MONGO_DB = os.getenv('MONGO_DB')
 
-# MONGO_DB = "ich_edit"
+CLIENT = MongoClient(
+    f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}/"
+    f"?readPreference=primary&ssl=false&authMechanism=DEFAULT&authSource={MONGO_DB}"
+)
 
-# QUERY_DB = "final_project_100125dam_KrasnokutskijOksana"
 
-# QUERY_LOG = [{
-#  "timestamp": "2025-05-01T15:34:00",
- 
-# {"search_type": 
-#     {"film_name": {main.get_action(name)}},
-#     {"ganre_year": 
-#         {"film_ganre": {main.get_action(ganre)}},
-#         {"film_release_year_min": {main.get_action(release_year_min)}},
-#         {"film_release_year_max": {main.get_action(release_year_max)}}
-#          }
-#     },
-          
-#  "results_count": 3
-# }]
+
+QUERY_DB = "final_project_100125dam_KrasnokutskijOksana"
+
+
+PIPELINE = [
+        {"$group": {"_id": "$query_type", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}},
+        {"$limit": 5}
+    ]
+
+
+
 
