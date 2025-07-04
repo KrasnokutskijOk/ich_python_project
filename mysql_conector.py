@@ -5,6 +5,11 @@ import error_logger
 
 
 def connection(config):
+    """
+    Функция осуществляет подключение к базе данных MySQL
+
+
+    """
     try:
         return pymysql.connect(**config)
     except pymysql.MySQLError as e:
@@ -12,7 +17,14 @@ def connection(config):
         raise
 
 
-def searching_film_by_name(db_conn, name):
+def searching_film_by_name(db_conn, name: str) -> list:
+    """
+    Функция принимает строковое значение и осуществляет поиск по названию фильма
+    в базе данных MySQL
+    
+    
+    """
+    
     try:
         with db_conn.cursor() as cursor:
             cursor.execute(f"USE {settings.DATABASE_MYSQL_NAME};")
@@ -48,7 +60,14 @@ def searching_film_by_name(db_conn, name):
         return []
     
 
-def searching_film_by_ganre_and_release_year(db_conn, ganre, year_min, year_max):
+def searching_film_by_ganre_and_release_year(db_conn, ganre: str, year_min: int, year_max: int):
+
+    """
+    Функция принимает строковое значение и осуществляет поиск по жанру и диапазону годов выпуска
+    в базе данных MySQL
+    
+    
+    """
     try:
         with db_conn.cursor() as cursor:
             cursor.execute(f"USE {settings.DATABASE_MYSQL_NAME};")
@@ -101,7 +120,13 @@ def searching_film_by_ganre_and_release_year(db_conn, ganre, year_min, year_max)
         return []
     
 
-def get_all_ganres(db_conn):
+def get_all_ganres(db_conn) -> list:
+    """
+    Функция осущесвляет выборку всех жанров фильмов в базе данных MySQL
+
+    """
+
+    
     try:
         with db_conn.cursor() as cursor:
             cursor.execute(f"USE {settings.DATABASE_MYSQL_NAME};")
@@ -116,6 +141,11 @@ def get_all_ganres(db_conn):
 
 
 def get_year_range(db_conn):
+    """
+    Функция осущесвляет выборку минимального и максимального годов выпуска фильмов 
+    в базе данных MySQL
+
+    """
     try:
         with db_conn.cursor() as cursor:
             cursor.execute(f"USE {settings.DATABASE_MYSQL_NAME};")

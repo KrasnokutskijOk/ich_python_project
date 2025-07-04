@@ -6,7 +6,12 @@ import log_stats
 import error_logger
 import pymysql
 
-def get_action(action, db_conn):
+def get_action(action: int, db_conn):
+    """
+    Функция регулирует действия программы в зависимости от действий пользователя
+    
+    """
+    
     try:
         if action == 1:
             method = ui.search_method_selection()
@@ -50,7 +55,13 @@ def get_action(action, db_conn):
         ui.print_error("Unexpected input or action error.")
 
 
-def menu(db_conn):
+def menu(db_conn) -> None:
+    """
+    Функция запускает главное меню
+
+    """
+
+    
     while True:
         try:
             action = ui.main_menu()
@@ -64,7 +75,11 @@ def menu(db_conn):
             ui.print_error("Unexpected input or action error.")
             
 
-def main():
+def main() -> None:
+    """
+    Функция осуществляет запуск программы и подключение к базе данных MySQL
+
+    """
     try:
         db_conn = mysql_conector.connection(settings.DATABASE_MYSQL_R)
         menu(db_conn)

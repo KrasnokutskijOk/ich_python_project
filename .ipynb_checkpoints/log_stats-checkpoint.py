@@ -9,6 +9,10 @@ from collections import Counter
 
 
 def show_statistics():
+    """
+    Функция осущесвляет выборку 5 самых популярных и 5 последних запросов
+    в базе данных MongoDB
+    """
     try:
         collection = log_writer.get_mongo_collection()
     

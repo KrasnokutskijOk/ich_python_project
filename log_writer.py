@@ -3,7 +3,12 @@ from datetime import datetime
 import settings
 import error_logger
 
-def get_mongo_collection():
+def get_mongo_collection() -> None:
+    """
+    Функция осуществляет подключение и запись логов запосв 
+    в базу данных MongoDB
+
+    """
     try:
         client = settings.CLIENT
         db = client[settings.MONGO_DB]
