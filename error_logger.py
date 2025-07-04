@@ -6,5 +6,5 @@ logging.basicConfig(
     format = '%(asctime)s - %(levelname)s - %(message)s'
 )
 
-def log_error(message: str):
+def log_error(message: str) -> None:
     logging.error(message)

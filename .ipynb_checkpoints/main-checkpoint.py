@@ -5,8 +5,10 @@ import log_writer
 import log_stats
 import error_logger
 import pymysql
+from pymysql.connections import Connection
+from typing import Optional
 
-def get_action(action: int, db_conn):
+def get_action(action: int, db_conn: Connection) -> Optional[list[tuple]]:
     """
     Функция регулирует действия программы в зависимости от действий пользователя
     
@@ -55,7 +57,7 @@ def get_action(action: int, db_conn):
         ui.print_error("Unexpected input or action error.")
 
 
-def menu(db_conn) -> None:
+def menu(db_conn: Connection) -> None:
     """
     Функция запускает главное меню
 

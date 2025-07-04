@@ -4,10 +4,9 @@ import ui
 import error_logger
 
 
-def connection(config):
+def connection(config: dict[str, any]) -> pymysql.connections.Connection:
     """
     Функция осуществляет подключение к базе данных MySQL
-
 
     """
     try:
@@ -17,7 +16,7 @@ def connection(config):
         raise
 
 
-def searching_film_by_name(db_conn, name: str) -> list:
+def searching_film_by_name(db_conn: pymysql.connections.Connection, name: str) -> list[tuple[any, ...]]:
     """
     Функция принимает строковое значение и осуществляет поиск по названию фильма
     в базе данных MySQL
@@ -60,7 +59,12 @@ def searching_film_by_name(db_conn, name: str) -> list:
         return []
     
 
-def searching_film_by_ganre_and_release_year(db_conn, ganre: str, year_min: int, year_max: int):
+def searching_film_by_ganre_and_release_year(
+    db_conn: pymysql.connections.Connection,
+    ganre: str,
+    year_min: int,
+    year_max: int
+) - > list[tuple[any, ...]]:
 
     """
     Функция принимает строковое значение и осуществляет поиск по жанру и диапазону годов выпуска
@@ -120,7 +124,7 @@ def searching_film_by_ganre_and_release_year(db_conn, ganre: str, year_min: int,
         return []
     
 
-def get_all_ganres(db_conn) -> list:
+def get_all_ganres(db_conn: pymysql.connections.Connection) -> list[str]:
     """
     Функция осущесвляет выборку всех жанров фильмов в базе данных MySQL
 
@@ -140,7 +144,7 @@ def get_all_ganres(db_conn) -> list:
 
 
 
-def get_year_range(db_conn):
+def get_year_range(db_conn: pymysql.connections.Connection) - tuple[int, int]:
     """
     Функция осущесвляет выборку минимального и максимального годов выпуска фильмов 
     в базе данных MySQL

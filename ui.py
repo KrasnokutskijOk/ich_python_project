@@ -22,7 +22,7 @@ def main_menu() -> int:
 
 def search_method_selection() -> int:
     """
-    Функция  осущесвляет ввод данных от пользователя
+    Функция  принимает ввод данных от пользователя
     
     """
     try:
@@ -35,7 +35,7 @@ def search_method_selection() -> int:
 
 def film_name() -> str:
     """
-    Функция  осущесвляет ввод данных от пользователя
+    Функция  принимает ввод данных от пользователя
     
     
     """
@@ -46,9 +46,9 @@ def film_name() -> str:
         print_error("Error while reading film name.")
         return ""
 
-def film_ganre(ganres: list) -> str:
+def film_ganre(ganres: list[str]) -> str:
     """
-    Функция  осущесвляет ввод данных от пользователя
+    Функция  принимает ввод данных от пользователя
     
     """
     try:
@@ -61,9 +61,9 @@ def film_ganre(ganres: list) -> str:
         print_error("Error while reading genre.")
         return ""
     
-def film_release_year_min(min_year, max_year) -> int:
+def film_release_year_min(min_year: int, max_year: int) -> int:
     """
-    Функция  осущесвляет ввод данных от пользователя
+    Функция  принимает ввод данных от пользователя
     
     """
     try:
@@ -73,9 +73,9 @@ def film_release_year_min(min_year, max_year) -> int:
         print_error("Please enter a valid year.")
         return min_year
 
-def film_release_year_max(min_year, max_year) -> int:
+def film_release_year_max(min_year: int, max_year: int) -> int:
     """
-    Функция  осущесвляет ввод данных от пользователя
+    Функция  принимает ввод данных от пользователя
     
     """
     try:
@@ -87,7 +87,7 @@ def film_release_year_max(min_year, max_year) -> int:
 
 def continue_break_input() -> str:
     """
-    Функция  осущесвляет ввод данных от пользователя
+    Функция  принимает ввод данных от пользователя
     
     """
     try:
@@ -146,7 +146,7 @@ def print_invalid_input() -> None:
     """
     print("Invalid input. Please try again. ")
 
-def print_mysql_error(error) -> None:
+def print_mysql_error(error: Exception) -> None:
     """
     Функция выводит сообщение программы пользователю
     

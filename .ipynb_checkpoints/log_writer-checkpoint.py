@@ -1,9 +1,10 @@
 from pymongo import MongoClient
+from pymongo.collection import Collection
 from datetime import datetime
 import settings
 import error_logger
 
-def get_mongo_collection() -> None:
+def get_mongo_collection() -> Collection:
     """
     Функция осуществляет подключение и запись логов запосв 
     в базу данных MongoDB
@@ -18,7 +19,7 @@ def get_mongo_collection() -> None:
         raise
 
 
-def write_log(search_type, params: dict, results_count: int):
+def write_log(search_type: str, params: dict, results_count: int):
     try:
         collection = get_mongo_collection()
         log = {
